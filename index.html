@@ -23,7 +23,7 @@
 <style>
   /* ---- Identidade Jorne (mesma paleta do app nativo) ---- */
   :root{
-    --terracota:#C1552F; --oliva:#45503A; --ambar:#E3A23C;
+    --terracota:#C1552F; --oliva:#45503A; --ambar:#E3A23C; --verde:#4F9A3F;
     --creme:#F5EFE6; --bg:#FAF7F2; --card:#FFFFFF;
     --ink:#2B2621; --muted:#8A8078; --line:#EAE2D6;
     --safe-top:env(safe-area-inset-top); --safe-bottom:env(safe-area-inset-bottom);
@@ -51,31 +51,38 @@
   .card.flush{padding:0;overflow:hidden}
   .card h2{margin:0 0 4px;font-family:var(--rounded);font-size:16px;font-weight:700}
   .hint{color:var(--muted);font-size:13.5px;line-height:1.45;margin:6px 0 0}
-  code{background:var(--creme);padding:1px 5px;border-radius:5px;font-size:12px}
+  .sep{height:1px;background:var(--line);margin:14px 0}
 
   .btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;
     border:none;border-radius:12px;padding:14px;font-size:15px;font-weight:600;
     font-family:inherit;cursor:pointer;text-decoration:none;background:var(--terracota);color:#fff}
   .btn.secondary{background:var(--creme);color:var(--terracota);border:1px solid var(--line)}
+  .btn.green{background:var(--verde)}
   .btn.danger{background:#FBE9E7;color:#B3261E}
+  .btn.small{padding:9px 12px;font-size:13.5px;width:auto;border-radius:10px}
   .btn:disabled{opacity:.45}
   .btn:active{opacity:.85}
   .rowbtns{display:flex;gap:8px}
   .rowbtns .btn{flex:1}
 
-  input[type=text]{width:100%;border:1px solid var(--line);border-radius:12px;padding:13px 14px;
-    font-size:16px;font-family:inherit;background:#fff;color:var(--ink);margin-top:8px}
+  label.f{display:block;font-size:12.5px;font-weight:700;color:var(--muted);
+    text-transform:uppercase;letter-spacing:.4px;margin:12px 0 0}
+  input,select,textarea{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px 13px;
+    font-size:16px;font-family:inherit;background:#fff;color:var(--ink);margin-top:6px}
+  textarea{min-height:70px;resize:vertical}
   input.code{font-family:var(--rounded);font-size:24px;font-weight:700;letter-spacing:3px;
     text-align:center;text-transform:uppercase;color:var(--terracota)}
   .err{color:#B3261E;font-size:13.5px;margin-top:10px}
+  .ok{color:var(--verde);font-size:13.5px;margin-top:10px}
 
   /* lista de viagens */
-  .trip{display:flex;align-items:center;gap:12px;width:100%;background:none;border:none;
-    padding:14px 0;border-top:1px solid var(--line);cursor:pointer;font-family:inherit;text-align:left}
+  .trip{display:flex;align-items:center;gap:12px;padding:14px 0;border-top:1px solid var(--line)}
   .trip:first-child{border-top:none}
+  .trip .grow{flex:1;cursor:pointer}
   .trip .tname{font-family:var(--rounded);font-size:16px;font-weight:600;color:var(--ink)}
   .trip .tper{font-size:12.5px;color:var(--muted);margin-top:2px}
-  .badge{margin-left:auto;font-size:11.5px;font-weight:700;padding:5px 10px;border-radius:999px;white-space:nowrap}
+  .badge{font-size:11.5px;font-weight:700;padding:5px 10px;border-radius:999px;white-space:nowrap}
+  .kebab{background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;padding:4px 8px}
 
   /* mapa e membros */
   #map{height:340px;width:100%;background:#E5E0D8}
@@ -90,9 +97,10 @@
   .avatar{width:38px;height:38px;border-radius:50%;flex:none;display:flex;overflow:hidden;
     align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:15px;position:relative}
   .avatar img{width:100%;height:100%;object-fit:cover}
+  .avatar.big{width:92px;height:92px;font-size:34px}
   .live{position:absolute;right:-1px;bottom:-1px;width:11px;height:11px;border-radius:50%;
     background:#9aa5b1;border:2px solid #fff}
-  .live.on{background:#2E7D32}
+  .live.on{background:var(--verde)}
   .member .name{font-weight:600;font-size:15px}
   .member .st{color:var(--muted);font-size:12.5px}
   .tag{font-size:10.5px;font-weight:800;padding:2px 6px;border-radius:999px;
@@ -113,7 +121,7 @@
   .item{display:flex;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
   .item:first-child{border-top:none}
   .chk{width:24px;height:24px;flex:none;border-radius:50%;border:2px solid var(--line);
-    background:#fff;cursor:pointer;font-size:13px;color:#fff;line-height:20px;text-align:center;padding:0}
+    background:#fff;cursor:pointer;font-size:13px;color:#fff;line-height:20px;text-align:center;padding:0;margin:0}
   .chk.on{background:var(--oliva);border-color:var(--oliva)}
   .item.done .it-title{text-decoration:line-through;color:var(--muted)}
   .it-time{font-size:12px;font-weight:700;color:var(--terracota)}
@@ -121,6 +129,29 @@
   .it-desc{font-size:13.5px;color:var(--muted);line-height:1.45}
   .file{display:inline-flex;align-items:center;gap:6px;background:var(--creme);color:var(--terracota);
     padding:7px 11px;border-radius:10px;font-size:13px;font-weight:600;text-decoration:none;margin-top:8px}
+  .mini{background:none;border:none;color:var(--muted);font-size:12.5px;font-weight:600;
+    cursor:pointer;padding:4px 6px;font-family:inherit}
+
+  /* clima e câmbio */
+  .wrow{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+  .wrow:first-child{border-top:none}
+  .wtemp{margin-left:auto;text-align:right}
+  .wtemp .mx{font-family:var(--rounded);font-size:17px;font-weight:700}
+  .wtemp .mn{font-size:12.5px;color:var(--muted)}
+  .wemoji{font-size:26px}
+  .result{font-family:var(--rounded);font-size:26px;font-weight:800;color:var(--terracota);margin-top:10px}
+
+  /* modal */
+  .modal{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.45);display:none;
+    align-items:flex-end;justify-content:center}
+  .modal.show{display:flex}
+  .sheet{background:var(--bg);width:100%;max-width:560px;border-radius:20px 20px 0 0;
+    padding:18px 16px calc(var(--safe-bottom) + 18px);max-height:92vh;overflow:auto}
+  .sheet h3{margin:0 0 4px;font-family:var(--rounded);font-size:18px}
+  .sheet .close{float:right;background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer}
+  .codebox{text-align:center;background:var(--creme);border:1px solid rgba(193,85,47,.35);
+    border-radius:18px;padding:24px 12px;margin:14px 0}
+  .codebox .big{font-family:var(--rounded);font-size:36px;font-weight:800;color:var(--terracota);letter-spacing:4px}
 
   nav{position:fixed;left:0;right:0;bottom:0;z-index:30;display:none;
     background:rgba(255,255,255,.9);backdrop-filter:saturate(180%) blur(20px);
@@ -128,8 +159,8 @@
     padding-bottom:var(--safe-bottom)}
   nav.show{display:flex}
   nav button{flex:1;background:none;border:none;cursor:pointer;padding:8px 0 6px;font-family:inherit;
-    color:var(--muted);font-size:11px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:3px}
-  nav button svg{width:24px;height:24px}
+    color:var(--muted);font-size:10.5px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:3px}
+  nav button svg{width:22px;height:22px}
   nav button.active{color:var(--terracota)}
 </style>
 </head>
@@ -146,7 +177,7 @@
 
 <main>
 
-  <!-- ============ CONECTANDO (login anônimo) ============ -->
+  <!-- ============ CONECTANDO ============ -->
   <section class="view" id="view-loading">
     <div class="card">
       <h2>Conectando…</h2>
@@ -161,14 +192,7 @@
   <section class="view" id="view-setup">
     <div class="card">
       <h2>⚙️ Falta ligar no Firebase</h2>
-      <p class="hint">Esta é a versão web do Jorne — ela lê o <b>mesmo banco</b> do app do iPhone. Pra funcionar, cole a config do seu projeto no topo do arquivo (constante <code>CFG</code>):</p>
-      <p class="hint">
-        1. <code>console.firebase.google.com</code> → seu projeto.<br>
-        2. Engrenagem → Configurações do projeto.<br>
-        3. Em "Seus apps", adicione um app <b>Web (&lt;/&gt;)</b> (ou use um existente).<br>
-        4. Copie o objeto <code>firebaseConfig</code> e cole no <code>CFG</code>.<br>
-        5. Confirme que tem o campo <code>databaseURL</code> — sem ele o tempo real não conecta.
-      </p>
+      <p class="hint">Cole a config do seu projeto no topo do arquivo (constante <code>CFG</code>), incluindo o campo <code>databaseURL</code>.</p>
     </div>
   </section>
 
@@ -184,9 +208,10 @@
 
   <!-- ============ LISTA DE VIAGENS ============ -->
   <section class="view" id="view-trips">
-    <div class="card" id="tripsCard">
+    <div class="card">
       <h2>Minhas viagens</h2>
       <div id="tripsList"></div>
+      <div style="margin-top:14px"><button class="btn" onclick="openNewTrip()">+ Criar viagem</button></div>
     </div>
 
     <div class="card">
@@ -194,13 +219,30 @@
       <p class="hint">Peça o código de convite pra quem organiza a viagem.</p>
       <input type="text" class="code" id="codeInput" placeholder="AB3-K9F" maxlength="8" autocomplete="off" autocapitalize="characters">
       <div class="err" id="codeErr" style="display:none"></div>
-      <div style="margin-top:12px"><button class="btn" id="joinBtn" onclick="joinWithCode()">Entrar na viagem</button></div>
+      <div style="margin-top:12px"><button class="btn secondary" id="joinBtn" onclick="joinWithCode()">Entrar na viagem</button></div>
     </div>
+  </section>
 
+  <!-- ============ PERFIL ============ -->
+  <section class="view" id="view-profile">
     <div class="card">
-      <h2>Perfil</h2>
-      <p class="hint">Você aparece como <b id="meName"></b>.</p>
-      <div style="margin-top:10px"><button class="btn secondary" onclick="editName()">Trocar meu nome</button></div>
+      <h2>Meu perfil</h2>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:10px;margin:14px 0">
+        <div id="myAvatar"></div>
+        <label class="btn secondary small" style="cursor:pointer">
+          Trocar foto
+          <input type="file" accept="image/*" id="photoInput" style="display:none" onchange="pickPhoto(this)">
+        </label>
+        <button class="mini" id="rmPhoto" onclick="removePhoto()" style="display:none">Remover foto</button>
+      </div>
+      <label class="f">Nome</label>
+      <input type="text" id="pName" placeholder="Seu nome">
+      <label class="f">Telefone</label>
+      <input type="text" id="pPhone" placeholder="(00) 00000-0000">
+      <label class="f">E-mail</label>
+      <input type="text" id="pEmail" placeholder="voce@email.com" autocapitalize="none">
+      <div style="margin-top:16px"><button class="btn" onclick="saveProfile()">Salvar</button></div>
+      <div class="ok" id="pOk" style="display:none">Perfil salvo.</div>
     </div>
   </section>
 
@@ -208,7 +250,10 @@
   <section class="view" id="view-local">
     <div class="card flush"><div id="map"></div></div>
     <div class="card">
-      <div class="rowbtns"><button class="btn" id="shareBtn" onclick="toggleShare()">Compartilhar minha localização</button></div>
+      <div class="rowbtns">
+        <button class="btn" id="shareBtn" onclick="toggleShare()">Compartilhar minha localização</button>
+        <button class="btn green small" id="inviteBtn" onclick="openInvite()" style="display:none;flex:0 0 auto">Convidar</button>
+      </div>
       <ul class="members" id="membersList" style="margin-top:14px"></ul>
       <p class="hint">⚠️ No navegador a posição só atualiza com esta tela aberta e o celular desbloqueado. Em segundo plano, só o app do iPhone continua enviando.</p>
     </div>
@@ -217,12 +262,41 @@
   <!-- ============ ITINERÁRIO ============ -->
   <section class="view" id="view-itin">
     <div id="daysWrap"></div>
+    <button class="btn secondary" onclick="openNewDay()">+ Adicionar dia</button>
+  </section>
+
+  <!-- ============ CLIMA ============ -->
+  <section class="view" id="view-weather">
+    <div class="card"><h2>Clima</h2><div id="weatherList"></div></div>
+  </section>
+
+  <!-- ============ CÂMBIO ============ -->
+  <section class="view" id="view-money">
+    <div class="card">
+      <h2>Câmbio</h2>
+      <label class="f">De</label>
+      <select id="curFrom" onchange="calcMoney()"></select>
+      <label class="f">Valor</label>
+      <input type="text" id="curAmount" value="100" inputmode="decimal" oninput="calcMoney()">
+      <div style="margin-top:12px"><button class="btn secondary" onclick="swapMoney()">⇅ Inverter moedas</button></div>
+      <div class="sep"></div>
+      <label class="f">Para</label>
+      <select id="curTo" onchange="calcMoney()"></select>
+      <div class="result" id="curResult">—</div>
+      <div class="hint" id="curRate"></div>
+      <p class="hint">Cotação de referência diária. Fonte: open.er-api.com</p>
+    </div>
   </section>
 
 </main>
 
+<!-- ============ MODAIS ============ -->
+<div class="modal" id="modal" onclick="if(event.target===this) closeModal()">
+  <div class="sheet" id="sheet"></div>
+</div>
+
 <nav id="tabs">
-  <button class="active" data-tab="local" onclick="showTab('local',this)">
+  <button data-tab="local" onclick="showTab('local',this)">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.5-7-11a7 7 0 1 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
     Localização
   </button>
@@ -230,23 +304,31 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v3M16 2v3M4 8h16M5 5h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg>
     Itinerário
   </button>
+  <button data-tab="weather" onclick="showTab('weather',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 18a4 4 0 0 0 0-8 6 6 0 0 0-11.3 2A3.5 3.5 0 0 0 6.5 18z"/></svg>
+    Clima
+  </button>
+  <button data-tab="money" onclick="showTab('money',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h14l-3-3M21 16H7l3 3"/></svg>
+    Câmbio
+  </button>
 </nav>
 
 <script>
 /* ==================================================================
-   JORNE — versão web (plano B do app iPhone).
-   Lê e escreve no MESMO Firebase Realtime Database do app nativo,
-   no mesmo formato:
-     trips/{id}/meta      -> name,startDate,endDate,archived,inviteCode…
-     trips/{id}/members   -> uid: nome
-     trips/{id}/admins    -> uid: true
-     trips/{id}/days/{d}/meta  -> date,title,city,order
-     trips/{id}/days/{d}/items -> time,title,desc,type,fileLabel,fileURL,done,order
-     trips/{id}/locations/{nome} -> name,uid,color,lat,lng,ts
-     invites/{CODIGO}     -> trip, expiresAt
-     users/{uid}          -> name,phone,email,photo(base64)
+   JORNE — versão web. Lê e escreve no MESMO Firebase do app nativo:
+     trips/{id}/meta            name,startDate,endDate,archived,createdBy,
+                                inviteCode,inviteExpiresAt
+     trips/{id}/members         uid: nome
+     trips/{id}/admins          uid: true
+     trips/{id}/days/{d}/meta   date,title,city,order
+     trips/{id}/days/{d}/items  time,title,desc,type,fileLabel,fileURL,done,order
+     trips/{id}/locations/{nome} name,uid,color,lat,lng,ts
+     invites/{CODIGO}           trip, expiresAt
+     users/{uid}                name,phone,email,photo(base64)
 
-   ÚNICA COISA A EDITAR: o CFG abaixo (config web do seu Firebase).
+   Não tem (e não dá pra ter no navegador): localização em segundo plano
+   e o tradutor (o app usa OCR + tradução da Apple, no aparelho).
    ================================================================== */
 const CFG = {
   apiKey: "AIzaSyBfYpDI9N06ZlyAsXFNZ8NOYLBjkuKCDQ8",
@@ -258,21 +340,39 @@ const CFG = {
   appId: "1:1061181637713:web:0a4b766706a652eb62e470"
 };
 
-/* ============ Estado ============ */
+/* ============ Constantes ============ */
 const PALETTE = ["#C1552F","#45503A","#E3A23C","#8A5A44","#B0763A","#6B7256","#7A7266"];
-const STALE_MS = 2 * 60 * 1000;              // >2 min sem update = "não ativo"
+const STALE_MS = 2 * 60 * 1000;
 const MES = ["JAN","FEV","MAR","ABR","MAI","JUN","JUL","AGO","SET","OUT","NOV","DEZ"];
 const SEM = ["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"];
+// Mesmos tipos de item do app (emoji + rótulo + cor).
+const TIPOS = {
+  flight:   {e:"✈️", n:"Voo"},        train:    {e:"🚆", n:"Trem"},
+  attraction:{e:"🎟️", n:"Atração"},   hotel:    {e:"🏨", n:"Hotel"},
+  meal:     {e:"🍽️", n:"Refeição"},   transport:{e:"🚗", n:"Transporte"},
+  other:    {e:"📌", n:"Outro"}
+};
+// País (ISO2) -> moeda. Usado pra sugerir as moedas das cidades da viagem.
+const MOEDA_PAIS = {
+  BR:"BRL", US:"USD", GB:"GBP", CA:"CAD", MX:"MXN", AR:"ARS", CL:"CLP", UY:"UYU",
+  PY:"PYG", CO:"COP", PE:"PEN", PT:"EUR", ES:"EUR", FR:"EUR", IT:"EUR", DE:"EUR",
+  NL:"EUR", BE:"EUR", AT:"EUR", IE:"EUR", GR:"EUR", FI:"EUR", EE:"EUR", LV:"EUR",
+  LT:"EUR", SK:"EUR", SI:"EUR", LU:"EUR", MT:"EUR", CY:"EUR", HR:"EUR",
+  CH:"CHF", NO:"NOK", SE:"SEK", DK:"DKK", IS:"ISK", PL:"PLN", CZ:"CZK", HU:"HUF",
+  RO:"RON", BG:"BGN", TR:"TRY", RU:"RUB", UA:"UAH",
+  JP:"JPY", CN:"CNY", KR:"KRW", TH:"THB", VN:"VND", ID:"IDR", MY:"MYR", SG:"SGD",
+  IN:"INR", AE:"AED", IL:"ILS", EG:"EGP", MA:"MAD", ZA:"ZAR",
+  AU:"AUD", NZ:"NZD"
+};
 
-let db = null;
-let ALL = {};            // árvore trips inteira (o app nativo também lê assim)
-let USERS = {};          // uid -> {name, photo}
-let CUR = null;          // id da viagem aberta
-let TAB = "local";
-let map = null, markers = {}, fitDone = false;
-let watchId = null;
+/* ============ Estado ============ */
+let db = null, ALL = {}, USERS = {}, CUR = null, TAB = "local";
+let map = null, markers = {}, fitDone = false, watchId = null;
+let OPEN_DAYS = new Set();          // dias expandidos (preserva ao re-renderizar)
+let WEATHER = {};                   // "cidade|data" -> {s:'load'|'ok'|'err'|'far', d:{}}
+let RATES = null, CURLIST = [], curDefaults = false;
 
-/* ============ Identidade neste aparelho ============ */
+/* ============ Identidade ============ */
 function myUid(){
   let u = localStorage.getItem("user_uid");
   if(!u){
@@ -288,6 +388,7 @@ function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g,m=>({'&':'&amp;'
 function el(id){ return document.getElementById(id); }
 function parseDate(s){ if(!s) return null; const p=String(s).split("-"); if(p.length!==3) return null;
   const d=new Date(+p[0],+p[1]-1,+p[2]); return isNaN(d)?null:d; }
+function ymd(d){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,'0')+"-"+String(d.getDate()).padStart(2,'0'); }
 function timeAgo(ts){
   if(!ts) return "sem localização";
   const s=Math.floor((Date.now()-ts)/1000);
@@ -296,15 +397,13 @@ function timeAgo(ts){
   const h=Math.floor(m/60); if(h<24) return "há "+h+"h";
   return "há "+Math.floor(h/24)+"d";
 }
-// Cor estável a partir do nome (mesma paleta do app).
 function colorFor(name){
   let h=0; for(const c of String(name)) h=(h*31+c.charCodeAt(0))|0;
   return PALETTE[Math.abs(h)%PALETTE.length];
 }
-// O RTDB proíbe . # $ [ ] / em chaves — o nó de localização é a chave.
+// O RTDB proíbe . # $ [ ] / em chaves — o nó de localização é chaveado pelo nome.
 function safeKey(name){ return String(name).replace(/[.#$/\[\]]/g,"_"); }
 
-// Situação da viagem (mesma regra do app).
 function tripStatus(meta){
   const s=parseDate(meta.startDate), e=parseDate(meta.endDate);
   const today=new Date(); today.setHours(0,0,0,0);
@@ -321,45 +420,63 @@ function periodText(meta){
   const f=d=>String(d.getDate()).padStart(2,'0')+"/"+String(d.getMonth()+1).padStart(2,'0');
   return (s&&e) ? f(s)+" – "+f(e) : "";
 }
-// Avatar: foto do perfil (users/{uid}/photo) ou inicial colorida.
 function avatarHTML(uid, name, cls){
   const photo = USERS[uid] && USERS[uid].photo;
   const ini = String(name||"?").trim().charAt(0).toUpperCase();
   const inner = photo ? `<img src="data:image/jpeg;base64,${photo}" alt="">` : esc(ini);
   return `<div class="${cls}" style="background:${colorFor(name)}">${inner}`;
 }
+function trip(){ return CUR ? ALL[CUR] : null; }
+function iAmAdmin(){ const t=trip(); return !!(t && t.admins && t.admins[myUid()]); }
+function iAmMember(){ const t=trip(); return !!(t && t.members && t.members[myUid()]!==undefined); }
 
-/* ============ Navegação de telas ============ */
+/* ============ Navegação ============ */
 function screen(name){
   document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
   el("view-"+name).classList.add("active");
-  const inTrip = (name==="local"||name==="itin");
+  const inTrip = ["local","itin","weather","money"].includes(name);
   el("tabs").classList.toggle("show", inTrip);
-  el("backBtn").style.display = inTrip ? "block" : "none";
+  el("backBtn").style.display = (inTrip || name==="profile") ? "block" : "none";
   window.scrollTo(0,0);
 }
 function showTab(t, btn){
   TAB=t;
   document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
   if(btn) btn.classList.add("active");
+  else { const b=document.querySelector(`nav button[data-tab="${t}"]`); if(b) b.classList.add("active"); }
   screen(t);
   if(t==="local" && map) setTimeout(()=>map.invalidateSize(),120);
+  if(t==="weather") renderWeather();
+  if(t==="money") loadMoney();
 }
 function openTrip(id){
-  CUR=id; fitDone=false;
+  CUR=id; fitDone=false; OPEN_DAYS=new Set(); WEATHER={}; RATES=null; curDefaults=false;
   markers={}; if(map){ map.remove(); map=null; }
   render();
-  showTab("local", document.querySelector('nav button[data-tab="local"]'));
+  showTab("local");
 }
 function leaveTrip(){
   stopShare();
+  if(!CUR){ render(); screen("trips"); return; }   // saindo do perfil
   CUR=null;
   if(map){ map.remove(); map=null; markers={}; }
   render();
   screen("trips");
 }
+function openProfile(){
+  el("pName").value  = myName();
+  el("pPhone").value = localStorage.getItem("profile_phone") || "";
+  el("pEmail").value = localStorage.getItem("profile_email") || "";
+  renderMyAvatar();
+  el("pOk").style.display="none";
+  screen("profile");
+}
 
-/* ============ Nome ============ */
+/* ============ Modal ============ */
+function openModal(html){ el("sheet").innerHTML = html; el("modal").classList.add("show"); }
+function closeModal(){ el("modal").classList.remove("show"); el("sheet").innerHTML=""; }
+
+/* ============ Nome e perfil ============ */
 function saveName(){
   const v = el("nameInput").value.trim();
   if(!v) return;
@@ -368,25 +485,122 @@ function saveName(){
   render();
   screen("trips");
 }
-function editName(){
-  el("nameInput").value = myName();
-  screen("name");
+function renderMyAvatar(){
+  el("myAvatar").innerHTML = avatarHTML(myUid(), myName(), "avatar big")+"</div>";
+  el("rmPhoto").style.display = (USERS[myUid()] && USERS[myUid()].photo) ? "block" : "none";
 }
-// Publica o perfil em /users/{uid} pro grupo ver o nome.
+// Reduz a foto pra um thumbnail (mesma ideia do app: 256px, jpeg 80%).
+function pickPhoto(input){
+  const file = input.files && input.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = new Image();
+    img.onload = () => {
+      const target = 256;
+      const scale = Math.min(target/img.width, target/img.height, 1);
+      const c = document.createElement("canvas");
+      c.width = Math.round(img.width*scale); c.height = Math.round(img.height*scale);
+      c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+      const b64 = c.toDataURL("image/jpeg", 0.8).split(",")[1];
+      db.ref("users/"+myUid()+"/photo").set(b64);
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+  input.value = "";
+}
+function removePhoto(){ db.ref("users/"+myUid()+"/photo").remove(); }
+function saveProfile(){
+  const n = el("pName").value.trim();
+  if(!n) return;
+  localStorage.setItem("trip_me", n);
+  localStorage.setItem("profile_phone", el("pPhone").value.trim());
+  localStorage.setItem("profile_email", el("pEmail").value.trim());
+  publishProfile();
+  // O nome também fica gravado como membro em cada viagem.
+  Object.entries(ALL).forEach(([id,t])=>{
+    if(t && t.members && t.members[myUid()]!==undefined) db.ref("trips/"+id+"/members/"+myUid()).set(n);
+  });
+  el("pOk").style.display="block";
+  render();
+}
 function publishProfile(){
   if(!db) return;
-  const uid=myUid();
-  db.ref("users/"+uid+"/name").set(myName());
+  db.ref("users/"+myUid()).update({
+    name: myName(),
+    phone: localStorage.getItem("profile_phone") || "",
+    email: localStorage.getItem("profile_email") || ""
+  });
 }
 
-/* ============ Entrar com código ============ */
+/* ============ Viagens: criar, arquivar, excluir ============ */
+function openNewTrip(){
+  const hoje = ymd(new Date());
+  openModal(`
+    <button class="close" onclick="closeModal()">✕</button>
+    <h3>Nova viagem</h3>
+    <p class="hint">Depois você adiciona os dias e os itens dentro da viagem.</p>
+    <label class="f">Nome</label>
+    <input type="text" id="ntName" placeholder="Ex: Eurotrip 2026">
+    <label class="f">Início</label>
+    <input type="date" id="ntStart" value="${hoje}">
+    <label class="f">Fim</label>
+    <input type="date" id="ntEnd" value="${hoje}">
+    <div style="margin-top:16px"><button class="btn" onclick="createTrip()">Criar viagem</button></div>
+  `);
+}
+function createTrip(){
+  const name = el("ntName").value.trim();
+  if(!name) return;
+  const uid = myUid();
+  const ref = db.ref("trips").push();
+  ref.child("meta").set({
+    name, startDate: el("ntStart").value, endDate: el("ntEnd").value,
+    createdBy: uid, createdAt: firebase.database.ServerValue.TIMESTAMP, archived: false
+  });
+  ref.child("admins/"+uid).set(true);
+  ref.child("members/"+uid).set(myName());
+  closeModal();
+  openTrip(ref.key);
+}
+function tripMenu(id){
+  const t = ALL[id]; if(!t) return;
+  const arch = (t.meta||{}).archived === true;
+  const admin = !!(t.admins && t.admins[myUid()]);
+  openModal(`
+    <button class="close" onclick="closeModal()">✕</button>
+    <h3>${esc((t.meta||{}).name||"Viagem")}</h3>
+    <div style="margin-top:14px"><button class="btn secondary" onclick="setArchived('${id}',${arch?"false":"true"})">
+      ${arch?"Desarquivar":"Arquivar"}</button></div>
+    ${admin?`<div style="margin-top:10px"><button class="btn danger" onclick="askDelete('${id}')">Excluir viagem</button></div>`:``}
+    <p class="hint">Arquivar só tira da lista principal. Excluir apaga pra todos os membros.</p>
+  `);
+}
+function setArchived(id, v){ db.ref("trips/"+id+"/meta/archived").set(v); closeModal(); }
+function askDelete(id){
+  openModal(`
+    <button class="close" onclick="closeModal()">✕</button>
+    <h3>Excluir viagem?</h3>
+    <p class="hint">Isso apaga a viagem, o itinerário e o mapa pra todos os membros. Não dá pra desfazer.</p>
+    <div style="margin-top:16px"><button class="btn danger" onclick="doDelete('${id}')">Excluir de vez</button></div>
+    <div style="margin-top:10px"><button class="btn secondary" onclick="closeModal()">Cancelar</button></div>
+  `);
+}
+function doDelete(id){
+  const code = ((ALL[id]||{}).meta||{}).inviteCode;
+  if(code) db.ref("invites/"+code).remove();
+  db.ref("trips/"+id).remove();
+  closeModal();
+  if(CUR===id) leaveTrip();
+}
+
+/* ============ Convite por código ============ */
 function joinWithCode(){
-  const raw = el("codeInput").value || "";
-  const code = raw.toUpperCase().replace(/[^A-Z0-9]/g,"");
+  const code = (el("codeInput").value||"").toUpperCase().replace(/[^A-Z0-9]/g,"");
   const errBox = el("codeErr");
   const show = m => { errBox.textContent=m; errBox.style.display="block"; };
   errBox.style.display="none";
-
   if(code.length!==6){ show("O código tem 6 caracteres. Confira com quem te convidou."); return; }
   el("joinBtn").disabled=true;
 
@@ -403,26 +617,93 @@ function joinWithCode(){
     .finally(()=>{ el("joinBtn").disabled=false; });
 }
 
+// Alfabeto sem caracteres ambíguos (igual ao app) — o código é digitado à mão.
+const ALFA = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+function randomCode(){ let s=""; for(let i=0;i<6;i++) s+=ALFA[Math.floor(Math.random()*ALFA.length)]; return s; }
+function fmtCode(c){ return c && c.length===6 ? c.slice(0,3)+"-"+c.slice(3) : (c||""); }
+function daysLeft(exp){ return Math.max(0, Math.ceil((exp/1000 - Date.now()/1000)/86400)); }
+
+function openInvite(){
+  const meta = (trip()||{}).meta || {};
+  const code = meta.inviteCode || "";
+  const exp  = meta.inviteExpiresAt || 0;
+  const valid = code && Date.now() < exp;
+  openModal(`
+    <button class="close" onclick="closeModal()">✕</button>
+    <h3>Convidar</h3>
+    <p class="hint">Mande este código pra quem você quer na viagem. A pessoa abre o Jorne e toca em “Entrar com código”.</p>
+    <div class="codebox">
+      ${valid
+        ? `<div class="big">${esc(fmtCode(code))}</div>
+           <div class="hint">${daysLeft(exp)===1?"Vale por mais 1 dia":"Vale por mais "+daysLeft(exp)+" dias"}</div>`
+        : `<div style="font-size:28px">🎟️</div>
+           <div style="font-family:var(--rounded);font-weight:700;margin-top:6px">${code?"Código expirado":"Nenhum código ativo"}</div>
+           <div class="hint">Gere um código pra convidar o pessoal.</div>`}
+    </div>
+    ${valid?`
+      <button class="btn" onclick="shareInvite()">Compartilhar convite</button>
+      <div style="margin-top:10px"><button class="btn secondary" id="cpBtn" onclick="copyCode()">Copiar só o código</button></div>
+    `:``}
+    <div style="margin-top:10px"><button class="btn secondary" onclick="genCode()">${valid?"Gerar novo código":"Gerar código"}</button></div>
+    ${valid?`<p class="hint">Ao gerar um novo, o código anterior para de funcionar.</p>`:``}
+  `);
+}
+// Gera um código novo e derruba o anterior.
+function genCode(attempt){
+  attempt = attempt||0;
+  if(attempt>=5) return;
+  const novo = randomCode();
+  const exp = Date.now() + 7*86400*1000;
+  const old = ((trip()||{}).meta||{}).inviteCode || "";
+  db.ref("invites/"+novo).once("value").then(snap=>{
+    if(snap.exists()) return genCode(attempt+1);   // colisão (raríssimo)
+    return db.ref("invites/"+novo).set({trip: CUR, expiresAt: exp}).then(()=>
+      db.ref("trips/"+CUR+"/meta").update({inviteCode: novo, inviteExpiresAt: exp})
+    ).then(()=>{ if(old) db.ref("invites/"+old).remove(); })
+     .then(()=>{ openInvite(); });
+  });
+}
+function inviteText(){
+  const meta = (trip()||{}).meta || {};
+  const code = fmtCode(meta.inviteCode||"");
+  const d = daysLeft(meta.inviteExpiresAt||0);
+  return `Bora pra ${meta.name||"nossa viagem"}? 🧳\n\n`
+       + `1. Abra o Jorne: ${location.origin+location.pathname}\n`
+       + `2. Toque em “Entrar com código”\n`
+       + `3. Use o código: ${code}\n\n`
+       + `O código vale ${d} dia${d===1?"":"s"}.`;
+}
+function shareInvite(){
+  const txt = inviteText();
+  if(navigator.share) navigator.share({text: txt}).catch(()=>{});
+  else { navigator.clipboard.writeText(txt); alert("Convite copiado."); }
+}
+function copyCode(){
+  const code = fmtCode(((trip()||{}).meta||{}).inviteCode||"");
+  navigator.clipboard.writeText(code);
+  const b=el("cpBtn"); if(b){ b.textContent="Código copiado"; setTimeout(()=>b.textContent="Copiar só o código",2000); }
+}
+function promote(uid){ db.ref("trips/"+CUR+"/admins/"+uid).set(true); }
+
 /* ============ Render ============ */
 function render(){
-  el("meName").textContent = myName();
-
   if(!CUR){
     el("hTitle").textContent = "Jorne";
-    el("hSub").textContent = "";
+    el("hSub").textContent = myName() ? "Olá, "+myName() : "";
     renderTripsList();
+    if(el("view-profile").classList.contains("active")) renderMyAvatar();
     return;
   }
-  const trip = ALL[CUR];
-  if(!trip){ leaveTrip(); return; }          // viagem apagada por outra pessoa
-  const meta = trip.meta||{};
+  const t = ALL[CUR];
+  if(!t){ leaveTrip(); return; }
+  const meta = t.meta||{};
   el("hTitle").textContent = meta.name || "Viagem";
   el("hSub").textContent = periodText(meta);
-  renderMembersAndMap(trip);
-  renderItinerary(trip);
+  renderMembersAndMap(t);
+  renderItinerary(t);
+  if(TAB==="weather") renderWeather();
 }
 
-// --- Lista de viagens em que EU sou membro (mesma regra do app) ---
 function renderTripsList(){
   const uid=myUid();
   const mine = Object.entries(ALL)
@@ -430,48 +711,52 @@ function renderTripsList(){
     .map(([id,t]) => ({id, meta:t.meta||{}}))
     .sort((a,b)=> String(a.meta.startDate||"").localeCompare(String(b.meta.startDate||"")));
 
-  const box = el("tripsList");
-  if(!mine.length){
-    box.innerHTML = `<p class="hint">Você ainda não está em nenhuma viagem. Use um código de convite abaixo.</p>`;
-    return;
-  }
-  box.innerHTML = mine.map(t=>{
+  const ativas = mine.filter(t=>t.meta.archived!==true);
+  const arqui  = mine.filter(t=>t.meta.archived===true);
+  const linha = t=>{
     const st=tripStatus(t.meta);
-    return `<button class="trip" onclick="openTrip('${t.id}')">
-      <div>
+    return `<div class="trip">
+      <div class="grow" onclick="openTrip('${t.id}')">
         <div class="tname">${esc(t.meta.name||"Viagem")}</div>
         <div class="tper">${esc(periodText(t.meta))}</div>
       </div>
       <span class="badge" style="background:${st.color}22;color:${st.color}">${esc(st.text)}</span>
-    </button>`;
-  }).join("");
+      <button class="kebab" onclick="tripMenu('${t.id}')">⋯</button>
+    </div>`;
+  };
+
+  const box = el("tripsList");
+  if(!mine.length){
+    box.innerHTML = `<p class="hint">Você ainda não está em nenhuma viagem. Crie a sua ou entre com um código de convite.</p>`;
+    return;
+  }
+  box.innerHTML = ativas.map(linha).join("")
+    + (arqui.length ? `<div class="sep"></div><div class="hint" style="margin:0 0 4px">Arquivadas</div>`+arqui.map(linha).join("") : "");
 }
 
-// --- Mapa + membros ---
-function renderMembersAndMap(trip){
-  const members = trip.members||{};
-  const admins  = trip.admins||{};
-  const locs    = trip.locations||{};
-
-  // Índice das localizações por uid (o nó é chaveado por nome).
+function renderMembersAndMap(t){
+  const members = t.members||{}, admins = t.admins||{}, locs = t.locations||{};
   const byUid={};
   Object.values(locs).forEach(l=>{ if(l && l.uid) byUid[l.uid]=l; });
+
+  el("inviteBtn").style.display = iAmAdmin() ? "flex" : "none";
 
   el("membersList").innerHTML = Object.entries(members).map(([uid,storedName])=>{
     const name = (USERS[uid] && USERS[uid].name) || storedName || "Sem nome";
     const l = byUid[uid];
     const active = l && (Date.now()-(l.ts||0)) < STALE_MS;
     const isMe = uid===myUid();
+    const canPromote = iAmAdmin() && !admins[uid] && !isMe;
     return `<li class="member">
       ${avatarHTML(uid,name,"avatar")}<span class="live ${active?'on':''}"></span></div>
-      <div>
+      <div style="flex:1">
         <div class="name">${esc(name)}${isMe?' <span style="color:var(--muted);font-weight:400">(você)</span>':''}${admins[uid]?'<span class="tag">Admin</span>':''}</div>
         <div class="st">${l?esc(timeAgo(l.ts)):'sem localização'}</div>
       </div>
+      ${canPromote?`<button class="btn secondary small" onclick="promote('${uid}')">Promover</button>`:''}
     </li>`;
   }).join("") || `<li class="member"><div class="st">Carregando…</div></li>`;
 
-  // Mapa (cria uma vez por viagem aberta)
   if(!map && el("map")){
     map = L.map("map",{zoomControl:true}).setView([48.8566,2.3522], 12);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -480,12 +765,10 @@ function renderMembersAndMap(trip){
   }
   if(!map) return;
 
-  const pts=[];
-  const seen={};
+  const pts=[], seen={};
   Object.values(locs).forEach(l=>{
     if(!l || typeof l.lat!=="number" || typeof l.lng!=="number") return;
-    const key=l.name||l.uid||"?";
-    seen[key]=true;
+    const key=l.name||l.uid||"?"; seen[key]=true;
     const stale=(Date.now()-(l.ts||0))>=STALE_MS;
     const icon=L.divIcon({
       html: avatarHTML(l.uid, l.name, "pin"+(stale?" stale":""))+"</div>",
@@ -495,47 +778,50 @@ function renderMembersAndMap(trip){
     else markers[key]=L.marker([l.lat,l.lng],{icon}).addTo(map).bindPopup(esc(l.name||""));
     pts.push([l.lat,l.lng]);
   });
-  // Some com quem parou de compartilhar
   Object.keys(markers).forEach(k=>{ if(!seen[k]){ map.removeLayer(markers[k]); delete markers[k]; } });
-
   if(pts.length && !fitDone){ map.fitBounds(pts,{padding:[40,40],maxZoom:15}); fitDone=true; }
 }
 
-// --- Itinerário (dias e itens, com check) ---
-function renderItinerary(trip){
-  const days = Object.entries(trip.days||{})
+/* ---- Itinerário ---- */
+function daysOf(t){
+  return Object.entries(t.days||{})
     .map(([id,d])=>({id, meta:d.meta||{}, items:d.items||{}}))
     .sort((a,b)=>(a.meta.order||0)-(b.meta.order||0));
-
+}
+function renderItinerary(t){
+  const days = daysOf(t);
   if(!days.length){
-    el("daysWrap").innerHTML = `<div class="card"><p class="hint">Esta viagem ainda não tem dias no itinerário.</p></div>`;
+    el("daysWrap").innerHTML = `<div class="card"><p class="hint">Esta viagem ainda não tem dias. Toque em “Adicionar dia” abaixo.</p></div>`;
     return;
   }
-
   el("daysWrap").innerHTML = days.map((day,i)=>{
     const dt=parseDate(day.meta.date);
     const dd=dt?String(dt.getDate()).padStart(2,'0'):(i+1);
     const mm=dt?MES[dt.getMonth()]:"";
     const wk=dt?SEM[dt.getDay()]:"";
+    const aberto = OPEN_DAYS.has(day.id) || (OPEN_DAYS.size===0 && i===0);
 
     const items = Object.entries(day.items)
       .map(([id,it])=>({id, ...it}))
       .sort((a,b)=>(a.order||0)-(b.order||0))
       .map(it=>{
+        const tipo = TIPOS[it.type] || TIPOS.other;
         const file = (it.fileURL && it.fileURL.trim())
           ? `<div><a class="file" href="${esc(it.fileURL)}" target="_blank" rel="noopener">⬇️ ${esc(it.fileLabel||"Arquivo")}</a></div>` : "";
         return `<li class="item ${it.done?'done':''}">
           <button class="chk ${it.done?'on':''}" onclick="toggleDone('${day.id}','${it.id}',${it.done?'true':'false'})">${it.done?'✓':''}</button>
           <div style="flex:1">
             ${it.time?`<div class="it-time">${esc(it.time)}</div>`:''}
-            <div class="it-title">${esc(it.title||'')}</div>
+            <div class="it-title">${tipo.e} ${esc(it.title||'')}</div>
             ${it.desc?`<div class="it-desc">${esc(it.desc)}</div>`:''}
             ${file}
+            <div><button class="mini" onclick="openItem('${day.id}','${it.id}')">editar</button>
+                 <button class="mini" onclick="delItem('${day.id}','${it.id}')">excluir</button></div>
           </div>
         </li>`;
       }).join("");
 
-    return `<details class="card day" ${i===0?'open':''}><summary>
+    return `<details class="card day" data-day="${day.id}" ${aberto?'open':''} ontoggle="dayToggled('${day.id}',this.open)"><summary>
       <div class="daynum"><div class="d">${dd}</div><div class="m">${mm}</div></div>
       <div>
         <div class="dtitle">${esc(day.meta.title||('Dia '+(i+1)))}</div>
@@ -543,13 +829,269 @@ function renderItinerary(trip){
       </div>
       <div class="chev">›</div></summary>
       <ul class="items">${items||'<li class="item"><div class="it-desc">Sem itens neste dia.</div></li>'}</ul>
+      <div style="display:flex;gap:8px;margin-top:10px">
+        <button class="btn secondary small" onclick="openItem('${day.id}')">+ Item</button>
+        <button class="mini" onclick="openDayEdit('${day.id}')">editar dia</button>
+        <button class="mini" onclick="delDay('${day.id}')">excluir dia</button>
+      </div>
     </details>`;
   }).join("");
 }
-
-// Marca/desmarca um item — sincroniza pro grupo na hora.
+function dayToggled(id, open){ if(open) OPEN_DAYS.add(id); else OPEN_DAYS.delete(id); }
 function toggleDone(dayId, itemId, current){
   db.ref("trips/"+CUR+"/days/"+dayId+"/items/"+itemId+"/done").set(!current);
+}
+
+// --- dia: criar / editar / excluir ---
+function openNewDay(){ dayForm(null); }
+function openDayEdit(id){ dayForm(id); }
+function dayForm(id){
+  const t=trip(); const days=daysOf(t);
+  const d = id ? days.find(x=>x.id===id) : null;
+  // Dia novo = dia seguinte ao último (viagem não pula dias), igual ao app.
+  let sugestao = (t.meta||{}).startDate || ymd(new Date());
+  if(!d && days.length){
+    const ult = parseDate(days[days.length-1].meta.date);
+    if(ult){ ult.setDate(ult.getDate()+1); sugestao = ymd(ult); }
+  }
+  openModal(`
+    <button class="close" onclick="closeModal()">✕</button>
+    <h3>${d?"Editar dia":"Novo dia"}</h3>
+    <label class="f">Data</label>
+    <input type="date" id="dgDate" value="${esc(d?d.meta.date:sugestao)}">
+    <label class="f">Título</label>
+    <input type="text" id="dgTitle" placeholder="Ex: Chegada em Paris" value="${esc(d?(d.meta.title||""):"")}">
+    <label class="f">Cidade (usada no clima e no câmbio)</label>
+    <input type="text" id="dgCity" placeholder="Ex: Paris" value="${esc(d?(d.meta.city||""):"")}" autocapitalize="words">
+    <div style="margin-top:16px"><button class="btn" onclick="saveDay(${d?`'${d.id}'`:"null"})">Salvar</button></div>
+  `);
+}
+function saveDay(id){
+  const meta = {
+    date: el("dgDate").value,
+    title: el("dgTitle").value.trim(),
+    city: el("dgCity").value.trim()
+  };
+  if(id){
+    db.ref("trips/"+CUR+"/days/"+id+"/meta").update(meta);
+  } else {
+    meta.order = daysOf(trip()).length;
+    db.ref("trips/"+CUR+"/days").push().child("meta").set(meta);
+  }
+  WEATHER={};                     // cidade pode ter mudado
+  closeModal();
+}
+function delDay(id){
+  openModal(`
+    <button class="close" onclick="closeModal()">✕</button>
+    <h3>Excluir este dia?</h3>
+    <p class="hint">Apaga o dia e todos os itens dele, pra todos os membros.</p>
+    <div style="margin-top:16px"><button class="btn danger" onclick="doDelDay('${id}')">Excluir</button></div>
+    <div style="margin-top:10px"><button class="btn secondary" onclick="closeModal()">Cancelar</button></div>
+  `);
+}
+function doDelDay(id){ db.ref("trips/"+CUR+"/days/"+id).remove(); OPEN_DAYS.delete(id); closeModal(); }
+
+// --- item: criar / editar / excluir ---
+function openItem(dayId, itemId){
+  const t=trip(); const day=(t.days||{})[dayId]||{};
+  const it = itemId ? (day.items||{})[itemId] : null;
+  const opts = Object.entries(TIPOS).map(([k,v])=>
+    `<option value="${k}" ${it && it.type===k?'selected':''}>${v.e} ${v.n}</option>`).join("");
+  openModal(`
+    <button class="close" onclick="closeModal()">✕</button>
+    <h3>${it?"Editar item":"Novo item"}</h3>
+    <label class="f">Tipo</label>
+    <select id="igType">${opts}</select>
+    <label class="f">Horário</label>
+    <input type="text" id="igTime" placeholder="Ex: 10:30" value="${esc(it?(it.time||""):"")}">
+    <label class="f">Título</label>
+    <input type="text" id="igTitle" placeholder="Ex: Voo GRU → CDG" value="${esc(it?(it.title||""):"")}">
+    <label class="f">Detalhes</label>
+    <textarea id="igDesc" placeholder="Opcional">${esc(it?(it.desc||""):"")}</textarea>
+    <label class="f">Nome do anexo</label>
+    <input type="text" id="igLabel" placeholder="Ex: Ingresso" value="${esc(it?(it.fileLabel||""):"")}">
+    <label class="f">Link do anexo</label>
+    <input type="text" id="igURL" placeholder="https://…" autocapitalize="none" value="${esc(it?(it.fileURL||""):"")}">
+    <div class="err" id="igErr" style="display:none"></div>
+    <div style="margin-top:16px"><button class="btn" onclick="saveItem('${dayId}',${itemId?`'${itemId}'`:"null"})">Salvar</button></div>
+  `);
+}
+function saveItem(dayId, itemId){
+  const url = el("igURL").value.trim();
+  if(url && !/^https?:\/\//i.test(url)){
+    const e=el("igErr"); e.textContent="O link deve começar com http:// ou https://"; e.style.display="block"; return;
+  }
+  const t=trip(); const day=(t.days||{})[dayId]||{};
+  const dados = {
+    time: el("igTime").value.trim(),
+    title: el("igTitle").value.trim(),
+    desc: el("igDesc").value.trim(),
+    type: el("igType").value,
+    fileLabel: el("igLabel").value.trim(),
+    fileURL: url
+  };
+  const base = "trips/"+CUR+"/days/"+dayId+"/items";
+  if(itemId){
+    db.ref(base+"/"+itemId).update(dados);
+  } else {
+    dados.done = false;
+    dados.order = Object.keys(day.items||{}).length;
+    db.ref(base).push().set(dados);
+  }
+  OPEN_DAYS.add(dayId);
+  closeModal();
+}
+function delItem(dayId, itemId){ db.ref("trips/"+CUR+"/days/"+dayId+"/items/"+itemId).remove(); }
+
+/* ---- Clima (Open-Meteo: geocoding + previsão, sem chave) ---- */
+function wmo(c){
+  if(c===0) return ["☀️","Céu limpo"];
+  if(c===1||c===2) return ["🌤️","Parcialmente nublado"];
+  if(c===3) return ["☁️","Nublado"];
+  if(c===45||c===48) return ["🌫️","Neblina"];
+  if([51,53,55,56,57].includes(c)) return ["🌦️","Garoa"];
+  if([61,63,65,66,67].includes(c)) return ["🌧️","Chuva"];
+  if([71,73,75,77].includes(c)) return ["❄️","Neve"];
+  if([80,81,82].includes(c)) return ["🌧️","Pancadas de chuva"];
+  if([85,86].includes(c)) return ["🌨️","Neve"];
+  if([95,96,99].includes(c)) return ["⛈️","Tempestade"];
+  return ["🌡️","—"];
+}
+async function geocode(city){
+  const u = "https://geocoding-api.open-meteo.com/v1/search?count=1&language=pt&name="+encodeURIComponent(city);
+  const r = await fetch(u); const j = await r.json();
+  const g = j.results && j.results[0];
+  return g ? {lat:g.latitude, lng:g.longitude, cc:g.country_code} : null;
+}
+async function fetchWeather(city, date){
+  const key = city+"|"+date;
+  if(WEATHER[key]) return;
+  const dt = parseDate(date);
+  if(!dt){ WEATHER[key]={s:"err"}; return; }
+  const hoje = new Date(); hoje.setHours(0,0,0,0);
+  const diff = Math.round((dt-hoje)/86400000);
+  // Janela da Open-Meteo: hoje até ~16 dias (mesma regra do app).
+  if(diff<0 || diff>15){ WEATHER[key]={s:"far"}; renderWeather(); return; }
+
+  WEATHER[key]={s:"load"};
+  try{
+    const g = await geocode(city);
+    if(!g){ WEATHER[key]={s:"err"}; renderWeather(); return; }
+    const u = `https://api.open-meteo.com/v1/forecast?latitude=${g.lat}&longitude=${g.lng}`
+            + `&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=auto`
+            + `&start_date=${date}&end_date=${date}`;
+    const j = await (await fetch(u)).json();
+    const d = j.daily;
+    if(!d || !d.weathercode || !d.weathercode.length){ WEATHER[key]={s:"err"}; }
+    else {
+      const [emoji,desc] = wmo(d.weathercode[0]);
+      WEATHER[key]={s:"ok", d:{emoji, desc,
+        max:Math.round(d.temperature_2m_max[0]), min:Math.round(d.temperature_2m_min[0])}};
+    }
+  } catch(e){ WEATHER[key]={s:"err"}; }
+  renderWeather();
+}
+function renderWeather(){
+  const t=trip(); if(!t) return;
+  const days = daysOf(t);
+  if(!days.length){
+    el("weatherList").innerHTML = `<p class="hint">Cadastre os dias (com cidade) pra ver o clima.</p>`;
+    return;
+  }
+  el("weatherList").innerHTML = days.map((day,i)=>{
+    const dt=parseDate(day.meta.date);
+    const dd=dt?String(dt.getDate()).padStart(2,'0'):(i+1);
+    const mm=dt?MES[dt.getMonth()]:"";
+    const city=(day.meta.city||"").trim();
+    let dir="", right="";
+    if(!city){ dir=`<div class="it-desc">Sem cidade cadastrada</div>`; }
+    else{
+      const w = WEATHER[city+"|"+day.meta.date];
+      if(!w){ dir=`<div class="it-desc">Carregando…</div>`; fetchWeather(city, day.meta.date); }
+      else if(w.s==="load"){ dir=`<div class="it-desc">Carregando…</div>`; }
+      else if(w.s==="far"){ dir=`<div class="it-desc">Fora da janela de previsão</div>`; }
+      else if(w.s==="err"){ dir=`<div class="it-desc">Previsão indisponível</div>`; }
+      else{
+        dir=`<div class="it-desc">${esc(w.d.desc)}</div>`;
+        right=`<div class="wemoji">${w.d.emoji}</div>
+               <div class="wtemp"><div class="mx">${w.d.max}°</div><div class="mn">${w.d.min}°</div></div>`;
+      }
+    }
+    return `<div class="wrow">
+      <div class="daynum"><div class="d">${dd}</div><div class="m">${mm}</div></div>
+      <div style="flex:1">
+        <div class="it-title">${esc(city || day.meta.title || "Dia "+(i+1))}</div>
+        ${dir}
+      </div>
+      ${right}
+    </div>`;
+  }).join("");
+}
+
+/* ---- Câmbio ---- */
+function moedaNome(code){
+  try{
+    const n = new Intl.DisplayNames(["pt-BR"],{type:"currency"}).of(code);
+    return n && n!==code ? code+" — "+n : code;
+  }catch(e){ return code; }
+}
+function fmtMoeda(v, code){
+  try{ return new Intl.NumberFormat("pt-BR",{style:"currency",currency:code}).format(v); }
+  catch(e){ return v.toFixed(2)+" "+code; }
+}
+async function loadMoney(){
+  if(RATES) { montaSelects(); return; }
+  el("curResult").textContent = "Carregando…";
+  try{
+    const j = await (await fetch("https://open.er-api.com/v6/latest/BRL")).json();
+    RATES = j.rates || {}; RATES.BRL = 1;
+  }catch(e){ el("curResult").textContent = "Não consegui as cotações."; return; }
+
+  // Moedas das cidades da viagem (mesma ideia do app, via geocoding da Open-Meteo).
+  const t=trip();
+  const cidades = [...new Set(daysOf(t||{}).map(d=>(d.meta.city||"").trim()).filter(Boolean))];
+  const set = new Set(["BRL"]);
+  for(const c of cidades){
+    try{
+      const g = await geocode(c);
+      const m = g && MOEDA_PAIS[String(g.cc||"").toUpperCase()];
+      if(m && RATES[m]) set.add(m);
+    }catch(e){}
+  }
+  CURLIST = [...set].sort((a,b)=> (a==="BRL"?0:1)-(b==="BRL"?0:1) || a.localeCompare(b));
+  montaSelects();
+}
+function montaSelects(){
+  const todas = Object.keys(RATES||{}).sort();
+  const grupo = (rot, arr) => `<optgroup label="${rot}">`
+    + arr.map(c=>`<option value="${c}">${esc(moedaNome(c))}</option>`).join("") + `</optgroup>`;
+  const html = (CURLIST.length>1 ? grupo("Da sua viagem", CURLIST) : "")
+             + grupo("Todas as moedas", todas);
+  const f=el("curFrom"), tsel=el("curTo");
+  const keepF=f.value, keepT=tsel.value;
+  f.innerHTML=html; tsel.innerHTML=html;
+  // Padrão: moeda estrangeira -> Real (igual ao app).
+  if(!curDefaults){
+    const est = CURLIST.find(c=>c!=="BRL");
+    f.value = est || "USD"; tsel.value = "BRL";
+    curDefaults = true;
+  } else { f.value=keepF; tsel.value=keepT; }
+  calcMoney();
+}
+function calcMoney(){
+  if(!RATES) return;
+  const from=el("curFrom").value, to=el("curTo").value;
+  const amt = parseFloat((el("curAmount").value||"0").replace(",","."))||0;
+  const rf=RATES[from], rt=RATES[to];
+  if(!rf||!rt){ el("curResult").textContent="—"; el("curRate").textContent=""; return; }
+  el("curResult").textContent = fmtMoeda(amt*rt/rf, to);
+  el("curRate").textContent = `1 ${from} = ${fmtMoeda(rt/rf, to)}`;
+}
+function swapMoney(){
+  const f=el("curFrom"), t=el("curTo");
+  const v=f.value; f.value=t.value; t.value=v;
+  calcMoney();
 }
 
 /* ============ Compartilhar localização ============ */
@@ -561,15 +1103,11 @@ function setShareUI(on){
 function toggleShare(){ watchId!==null ? stopShare() : startShare(); }
 function startShare(){
   if(!navigator.geolocation){ alert("Este navegador não tem GPS."); return; }
-  if(!myName()){ editName(); return; }
+  if(!myName()){ openProfile(); return; }
   watchId = navigator.geolocation.watchPosition(pos=>{
-    // Mesmo formato que o app nativo escreve (nó chaveado pelo nome).
     db.ref("trips/"+CUR+"/locations/"+safeKey(myName())).set({
-      name: myName(),
-      uid: myUid(),
-      color: colorFor(myName()),
-      lat: pos.coords.latitude,
-      lng: pos.coords.longitude,
+      name: myName(), uid: myUid(), color: colorFor(myName()),
+      lat: pos.coords.latitude, lng: pos.coords.longitude,
       ts: firebase.database.ServerValue.TIMESTAMP
     });
   }, err=>{
@@ -583,13 +1121,8 @@ function stopShare(){
   setShareUI(false);
 }
 
-/* ============ Início ============
-   O banco exige login ("auth != null" nas regras), então entramos com
-   login anônimo antes de ler qualquer coisa. Ele é só o porteiro: a
-   identidade da pessoa continua sendo o user_uid guardado no aparelho,
-   igual ao app nativo. */
+/* ============ Início ============ */
 let started = false;
-
 function boot(){
   const ok = CFG && CFG.databaseURL && typeof firebase!=="undefined";
   if(!ok){ screen("setup"); return; }
@@ -599,6 +1132,8 @@ function boot(){
   el("loadMsg").textContent="Entrando no servidor da viagem.";
   screen("loading");
 
+  // O banco exige login ("auth != null" nas regras). O login anônimo é só o
+  // porteiro: a identidade da pessoa continua sendo o user_uid do aparelho.
   firebase.auth().signInAnonymously().catch(e=>{
     el("loadMsg").textContent = "Não consegui conectar: " + e.message;
     el("loadRetry").style.display = "block";
@@ -608,11 +1143,7 @@ function boot(){
     if(!user || started) return;
     started = true;
     db = firebase.database();
-
-    // Perfis do grupo (nome + foto vinda do app nativo).
     db.ref("users").on("value", snap=>{ USERS = snap.val()||{}; render(); });
-
-    // Árvore de viagens: uma assinatura só, re-renderiza a cada mudança.
     db.ref("trips").on("value", snap=>{ ALL = snap.val()||{}; render(); });
 
     if(!myName()){ el("nameInput").value=""; screen("name"); }
@@ -620,6 +1151,9 @@ function boot(){
   });
 }
 boot();
+
+// Atalho pro perfil pelo cabeçalho.
+document.querySelector("header .title").onclick = ()=>{ if(!CUR) openProfile(); };
 </script>
 </body>
 </html>
